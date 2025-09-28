@@ -231,64 +231,129 @@ export class ExpensesService {
    * @param userId - User ID
    * @param startDate - Optional start date for statistics
    * @param endDate - Optional end date for statistics
-   * @returns Expense statistics
+   * @returns Expense statistics with proper income/expense separation
    */
   async getStats(userId: string, startDate?: string, endDate?: string) {
-    const where: any = { userId };
+    const baseWhere: any = { userId };
 
     if (startDate || endDate) {
-      where.date = {};
+      baseWhere.date = {};
       if (startDate) {
-        where.date.gte = new Date(startDate);
+        baseWhere.date.gte = new Date(startDate);
       }
       if (endDate) {
-        where.date.lte = new Date(endDate);
+        baseWhere.date.lte = new Date(endDate);
       }
     }
 
+    // This month filter
+    const thisMonthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const thisMonthEnd = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
+    const thisMonthWhere = {
+      ...baseWhere,
+      date: {
+        gte: thisMonthStart,
+        lte: thisMonthEnd,
+      },
+    };
+
     const [
+      // Total counts
       totalExpenses,
-      totalAmount,
-      averageAmount,
+      totalIncome,
+      totalExpense,
+      
+      // Total amounts
+      totalIncomeAmount,
+      totalExpenseAmount,
+      
+      // Average amounts
+      avgIncomeAmount,
+      avgExpenseAmount,
+      
+      // This month counts
       thisMonthExpenses,
-      thisMonthAmount,
+      thisMonthIncome,
+      thisMonthExpense,
+      
+      // This month amounts
+      thisMonthIncomeAmount,
+      thisMonthExpenseAmount,
     ] = await Promise.all([
-      this.prismaService.expense.count({ where }),
+      // Total counts
+      this.prismaService.expense.count({ where: baseWhere }),
+      this.prismaService.expense.count({ 
+        where: { ...baseWhere, category: { type: 'INCOME' } } 
+      }),
+      this.prismaService.expense.count({ 
+        where: { ...baseWhere, category: { type: 'EXPENSE' } } 
+      }),
+      
+      // Total amounts
       this.prismaService.expense.aggregate({
-        where,
+        where: { ...baseWhere, category: { type: 'INCOME' } },
         _sum: { amount: true },
       }),
       this.prismaService.expense.aggregate({
-        where,
+        where: { ...baseWhere, category: { type: 'EXPENSE' } },
+        _sum: { amount: true },
+      }),
+      
+      // Average amounts
+      this.prismaService.expense.aggregate({
+        where: { ...baseWhere, category: { type: 'INCOME' } },
         _avg: { amount: true },
       }),
-      this.prismaService.expense.count({
-        where: {
-          ...where,
-          date: {
-            gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-            lte: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
-          },
-        },
+      this.prismaService.expense.aggregate({
+        where: { ...baseWhere, category: { type: 'EXPENSE' } },
+        _avg: { amount: true },
+      }),
+      
+      // This month counts
+      this.prismaService.expense.count({ where: thisMonthWhere }),
+      this.prismaService.expense.count({ 
+        where: { ...thisMonthWhere, category: { type: 'INCOME' } } 
+      }),
+      this.prismaService.expense.count({ 
+        where: { ...thisMonthWhere, category: { type: 'EXPENSE' } } 
+      }),
+      
+      // This month amounts
+      this.prismaService.expense.aggregate({
+        where: { ...thisMonthWhere, category: { type: 'INCOME' } },
+        _sum: { amount: true },
       }),
       this.prismaService.expense.aggregate({
-        where: {
-          ...where,
-          date: {
-            gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-            lte: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
-          },
-        },
+        where: { ...thisMonthWhere, category: { type: 'EXPENSE' } },
         _sum: { amount: true },
       }),
     ]);
 
+    const totalIncomeSum = totalIncomeAmount._sum.amount || 0;
+    const totalExpenseSum = totalExpenseAmount._sum.amount || 0;
+    const thisMonthIncomeSum = thisMonthIncomeAmount._sum.amount || 0;
+    const thisMonthExpenseSum = thisMonthExpenseAmount._sum.amount || 0;
+
     return {
+      // Total statistics
       totalExpenses,
-      totalAmount: totalAmount._sum.amount || 0,
-      averageAmount: averageAmount._avg.amount || 0,
+      totalIncome,
+      totalExpense,
+      totalIncomeAmount: totalIncomeSum,
+      totalExpenseAmount: totalExpenseSum,
+      netAmount: totalIncomeSum - totalExpenseSum, // Thu - Chi = Số dư
+      
+      // Average amounts
+      averageIncomeAmount: avgIncomeAmount._avg.amount || 0,
+      averageExpenseAmount: avgExpenseAmount._avg.amount || 0,
+      
+      // This month statistics
       thisMonthExpenses,
-      thisMonthAmount: thisMonthAmount._sum.amount || 0,
+      thisMonthIncome,
+      thisMonthExpense,
+      thisMonthIncomeAmount: thisMonthIncomeSum,
+      thisMonthExpenseAmount: thisMonthExpenseSum,
+      thisMonthNetAmount: thisMonthIncomeSum - thisMonthExpenseSum,
     };
   }
 

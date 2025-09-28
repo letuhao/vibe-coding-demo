@@ -298,40 +298,46 @@ describe('ExpensesService', () => {
   });
 
   describe('getStats', () => {
-    it('should return expense statistics', async () => {
+    it('should return expense statistics with income/expense separation', async () => {
       // Arrange
       const mockStats = {
+        // Total statistics
         totalExpenses: 10,
-        totalAmount: 1000.50,
-        averageAmount: 100.05,
-        thisMonthExpenses: 10,
-        thisMonthAmount: 1000.5,
+        totalIncome: 5,
+        totalExpense: 5,
+        totalIncomeAmount: 1500.00,
+        totalExpenseAmount: 1000.50,
+        netAmount: 499.50, // 1500 - 1000.50
+        
+        // Average amounts
+        averageIncomeAmount: 300.00,
+        averageExpenseAmount: 200.10,
+        
+        // This month statistics
+        thisMonthExpenses: 8,
+        thisMonthIncome: 4,
+        thisMonthExpense: 4,
+        thisMonthIncomeAmount: 1200.00,
+        thisMonthExpenseAmount: 800.50,
+        thisMonthNetAmount: 399.50,
       };
+
+      // Mock all the required calls
       jest.spyOn(prismaService.expense, 'count')
-        .mockResolvedValueOnce(10) // Total count
-        .mockResolvedValueOnce(10); // This month count
+        .mockResolvedValueOnce(10) // totalExpenses
+        .mockResolvedValueOnce(5)  // totalIncome
+        .mockResolvedValueOnce(5)  // totalExpense
+        .mockResolvedValueOnce(8)  // thisMonthExpenses
+        .mockResolvedValueOnce(4)  // thisMonthIncome
+        .mockResolvedValueOnce(4); // thisMonthExpense
+
       jest.spyOn(prismaService.expense, 'aggregate')
-        .mockResolvedValueOnce({
-          _sum: { amount: 1000.50 },
-          _count: { id: 10 },
-          _avg: { amount: 100.05 },
-          _min: { amount: 10 },
-          _max: { amount: 200 },
-        })
-        .mockResolvedValueOnce({
-          _sum: { amount: 1000.50 },
-          _count: { id: 10 },
-          _avg: { amount: 100.05 },
-          _min: { amount: 10 },
-          _max: { amount: 200 },
-        })
-        .mockResolvedValueOnce({
-          _sum: { amount: 1000.5 },
-          _count: { id: 10 },
-          _avg: { amount: 100.05 },
-          _min: { amount: 10 },
-          _max: { amount: 200 },
-        });
+        .mockResolvedValueOnce({ _sum: { amount: 1500.00 } }) // totalIncomeAmount
+        .mockResolvedValueOnce({ _sum: { amount: 1000.50 } }) // totalExpenseAmount
+        .mockResolvedValueOnce({ _avg: { amount: 300.00 } })  // avgIncomeAmount
+        .mockResolvedValueOnce({ _avg: { amount: 200.10 } })  // avgExpenseAmount
+        .mockResolvedValueOnce({ _sum: { amount: 1200.00 } }) // thisMonthIncomeAmount
+        .mockResolvedValueOnce({ _sum: { amount: 800.50 } }); // thisMonthExpenseAmount
 
       // Act
       const result = await service.getStats(mockUser.id);

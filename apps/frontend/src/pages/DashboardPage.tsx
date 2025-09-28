@@ -9,6 +9,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useExpensesStore } from '../services/expenses.store';
 
 /**
  * DashboardPage component provides the main dashboard interface
@@ -17,6 +18,7 @@ import { useAuth } from '../hooks/useAuth';
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
+  const { stats, fetchStats, isLoading } = useExpensesStore();
 
   /**
    * Redirect to login if not authenticated
@@ -26,6 +28,15 @@ const DashboardPage: React.FC = () => {
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
+
+  /**
+   * Load expense statistics when component mounts
+   */
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchStats();
+    }
+  }, [isAuthenticated, fetchStats]);
 
   /**
    * Handle logout
@@ -92,7 +103,32 @@ const DashboardPage: React.FC = () => {
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold">$</span>
+                      <span className="text-white font-bold">+</span>
+                    </div>
+                  </div>
+                  <div className="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt className="text-sm font-medium text-gray-500 truncate">
+                        Total Income
+                      </dt>
+                      <dd className="text-lg font-medium text-green-600">
+                        {isLoading ? 'Loading...' : `$${(stats?.totalIncomeAmount || 0).toFixed(2)}`}
+                      </dd>
+                      <dd className="text-sm text-gray-500">
+                        {stats?.totalIncome || 0} transactions
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white overflow-hidden shadow rounded-lg">
+              <div className="p-5">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold">-</span>
                     </div>
                   </div>
                   <div className="ml-5 w-0 flex-1">
@@ -100,8 +136,11 @@ const DashboardPage: React.FC = () => {
                       <dt className="text-sm font-medium text-gray-500 truncate">
                         Total Expenses
                       </dt>
-                      <dd className="text-lg font-medium text-gray-900">
-                        $0.00
+                      <dd className="text-lg font-medium text-red-600">
+                        {isLoading ? 'Loading...' : `$${(stats?.totalExpenseAmount || 0).toFixed(2)}`}
+                      </dd>
+                      <dd className="text-sm text-gray-500">
+                        {stats?.totalExpense || 0} transactions
                       </dd>
                     </dl>
                   </div>
@@ -113,39 +152,26 @@ const DashboardPage: React.FC = () => {
               <div className="p-5">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold">#</span>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      (stats?.netAmount || 0) >= 0 ? 'bg-blue-500' : 'bg-orange-500'
+                    }`}>
+                      <span className="text-white font-bold">
+                        {(stats?.netAmount || 0) >= 0 ? '✓' : '⚠'}
+                      </span>
                     </div>
                   </div>
                   <div className="ml-5 w-0 flex-1">
                     <dl>
                       <dt className="text-sm font-medium text-gray-500 truncate">
-                        Categories
+                        Net Balance
                       </dt>
-                      <dd className="text-lg font-medium text-gray-900">
-                        0
+                      <dd className={`text-lg font-medium ${
+                        (stats?.netAmount || 0) >= 0 ? 'text-blue-600' : 'text-orange-600'
+                      }`}>
+                        {isLoading ? 'Loading...' : `$${(stats?.netAmount || 0).toFixed(2)}`}
                       </dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold">📊</span>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        This Month
-                      </dt>
-                      <dd className="text-lg font-medium text-gray-900">
-                        $0.00
+                      <dd className="text-sm text-gray-500">
+                        {(stats?.netAmount || 0) >= 0 ? 'Surplus' : 'Deficit'}
                       </dd>
                     </dl>
                   </div>

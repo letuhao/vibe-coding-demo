@@ -149,14 +149,37 @@ export interface ExpenseQueryParams {
  * Expense statistics
  */
 export interface ExpenseStats {
-  /** Total number of expenses */
+  // Total statistics
+  /** Total number of all transactions */
   totalExpenses: number;
-  /** Total amount of all expenses */
-  totalAmount: number;
+  /** Total number of income transactions */
+  totalIncome: number;
+  /** Total number of expense transactions */
+  totalExpense: number;
+  /** Total income amount */
+  totalIncomeAmount: number;
+  /** Total expense amount */
+  totalExpenseAmount: number;
+  /** Net amount (Income - Expense) */
+  netAmount: number;
+  
+  // Average amounts
+  /** Average income amount */
+  averageIncomeAmount: number;
   /** Average expense amount */
-  averageAmount: number;
-  /** Number of expenses this month */
+  averageExpenseAmount: number;
+  
+  // This month statistics
+  /** Number of transactions this month */
   thisMonthExpenses: number;
-  /** Total amount this month */
-  thisMonthAmount: number;
+  /** Number of income transactions this month */
+  thisMonthIncome: number;
+  /** Number of expense transactions this month */
+  thisMonthExpense: number;
+  /** Total income amount this month */
+  thisMonthIncomeAmount: number;
+  /** Total expense amount this month */
+  thisMonthExpenseAmount: number;
+  /** Net amount this month (Income - Expense) */
+  thisMonthNetAmount: number;
 }

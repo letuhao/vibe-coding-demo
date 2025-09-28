@@ -239,12 +239,39 @@ const ExpensesPage: React.FC = () => {
           {/* Stats Cards */}
           {stats && (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+              {/* Total Income */}
               <div className="bg-white overflow-hidden shadow rounded-lg">
                 <div className="p-5">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">#</span>
+                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold">+</span>
+                      </div>
+                    </div>
+                    <div className="ml-5 w-0 flex-1">
+                      <dl>
+                        <dt className="text-sm font-medium text-gray-500 truncate">
+                          Total Income
+                        </dt>
+                        <dd className="text-lg font-medium text-green-600">
+                          {formatCurrency(stats.totalIncomeAmount)}
+                        </dd>
+                        <dd className="text-sm text-gray-500">
+                          {stats.totalIncome} transactions
+                        </dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Expenses */}
+              <div className="bg-white overflow-hidden shadow rounded-lg">
+                <div className="p-5">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold">-</span>
                       </div>
                     </div>
                     <div className="ml-5 w-0 flex-1">
@@ -252,8 +279,11 @@ const ExpensesPage: React.FC = () => {
                         <dt className="text-sm font-medium text-gray-500 truncate">
                           Total Expenses
                         </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          {stats.totalExpenses}
+                        <dd className="text-lg font-medium text-red-600">
+                          {formatCurrency(stats.totalExpenseAmount)}
+                        </dd>
+                        <dd className="text-sm text-gray-500">
+                          {stats.totalExpense} transactions
                         </dd>
                       </dl>
                     </div>
@@ -261,21 +291,31 @@ const ExpensesPage: React.FC = () => {
                 </div>
               </div>
 
+              {/* Net Amount */}
               <div className="bg-white overflow-hidden shadow rounded-lg">
                 <div className="p-5">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">$</span>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        stats.netAmount >= 0 ? 'bg-blue-500' : 'bg-orange-500'
+                      }`}>
+                        <span className="text-white font-bold">
+                          {stats.netAmount >= 0 ? '✓' : '⚠'}
+                        </span>
                       </div>
                     </div>
                     <div className="ml-5 w-0 flex-1">
                       <dl>
                         <dt className="text-sm font-medium text-gray-500 truncate">
-                          Total Amount
+                          Net Amount
                         </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          {formatCurrency(stats.totalAmount)}
+                        <dd className={`text-lg font-medium ${
+                          stats.netAmount >= 0 ? 'text-blue-600' : 'text-orange-600'
+                        }`}>
+                          {formatCurrency(stats.netAmount)}
+                        </dd>
+                        <dd className="text-sm text-gray-500">
+                          {stats.netAmount >= 0 ? 'Surplus' : 'Deficit'}
                         </dd>
                       </dl>
                     </div>
@@ -283,33 +323,12 @@ const ExpensesPage: React.FC = () => {
                 </div>
               </div>
 
+              {/* This Month */}
               <div className="bg-white overflow-hidden shadow rounded-lg">
                 <div className="p-5">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">μ</span>
-                      </div>
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-500 truncate">
-                          Average Amount
-                        </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          {formatCurrency(stats.averageAmount)}
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold">📅</span>
                       </div>
                     </div>
@@ -318,8 +337,13 @@ const ExpensesPage: React.FC = () => {
                         <dt className="text-sm font-medium text-gray-500 truncate">
                           This Month
                         </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          {formatCurrency(stats.thisMonthAmount)}
+                        <dd className={`text-lg font-medium ${
+                          stats.thisMonthNetAmount >= 0 ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          {formatCurrency(stats.thisMonthNetAmount)}
+                        </dd>
+                        <dd className="text-sm text-gray-500">
+                          {stats.thisMonthExpenses} transactions
                         </dd>
                       </dl>
                     </div>

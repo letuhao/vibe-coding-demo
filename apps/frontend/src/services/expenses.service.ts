@@ -32,11 +32,25 @@ export interface ExpenseQueryParams {
  * Expense statistics interface
  */
 export interface ExpenseStats {
+  // Total statistics
   totalExpenses: number;
-  totalAmount: number;
-  averageAmount: number;
+  totalIncome: number;
+  totalExpense: number;
+  totalIncomeAmount: number;
+  totalExpenseAmount: number;
+  netAmount: number;
+  
+  // Average amounts
+  averageIncomeAmount: number;
+  averageExpenseAmount: number;
+  
+  // This month statistics
   thisMonthExpenses: number;
-  thisMonthAmount: number;
+  thisMonthIncome: number;
+  thisMonthExpense: number;
+  thisMonthIncomeAmount: number;
+  thisMonthExpenseAmount: number;
+  thisMonthNetAmount: number;
 }
 
 /**
