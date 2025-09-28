@@ -199,7 +199,10 @@ const DashboardPage: React.FC = () => {
                 >
                   Manage Categories
                 </button>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <button 
+                  onClick={() => navigate('/reports')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                >
                   View Reports
                 </button>
                 <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">

@@ -13,6 +13,7 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import CategoriesPage from './pages/CategoriesPage';
 import ExpensesPage from './pages/ExpensesPage';
+import ReportsPage from './pages/ReportsPage';
 
 /**
  * App component is the root component of the application
@@ -27,10 +28,11 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           
-          {/* Protected routes */}
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/expenses" element={<ExpensesPage />} />
+                {/* Protected routes */}
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/categories" element={<CategoriesPage />} />
+                <Route path="/expenses" element={<ExpensesPage />} />
+                <Route path="/reports" element={<ReportsPage />} />
           
           {/* Default redirect */}
           <Route path="/" element={<Navigate to="/login" replace />} />
