@@ -146,3 +146,5 @@ test-results/
 tests/e2e/playwright-report/
 
 tests/e2e/e2e-test-results.json
+
+apps/backend/prisma/dev.db
