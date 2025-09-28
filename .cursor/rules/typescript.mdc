@@ -1,0 +1,4 @@
+---
+description: không được sử dụng javascript trong source code, bắt buộc phải sử dụng typescript để thay thế.
+alwaysApply: true
+---
