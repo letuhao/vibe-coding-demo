@@ -41,7 +41,7 @@ const RegisterPage: React.FC = () => {
    */
   useEffect(() => {
     clearError();
-  }, [clearError]);
+  }, []); // Remove clearError from dependencies to prevent infinite loop
 
   /**
    * Handle form input changes

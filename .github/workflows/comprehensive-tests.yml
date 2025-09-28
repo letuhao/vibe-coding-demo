@@ -1,0 +1,221 @@
+#
+# @fileoverview Comprehensive test workflow
+# @author Vibe Coding Demo
+# @version 1.0.0
+# @created 2024-01-15
+# @modified 2024-01-15
+#
+
+name: Comprehensive Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+
+jobs:
+  test-matrix:
+    strategy:
+      matrix:
+        node-version: [18, 20]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      run: |
+        npm ci
+        cd apps/backend && npm ci
+        cd ../frontend && npm ci
+        cd ../../tests && npm ci
+        cd ../tests/e2e && npm ci
+    
+    - name: Setup Database
+      run: |
+        cd apps/backend
+        npx prisma generate
+        npx prisma db push
+    
+    - name: Run Unit Tests
+      run: |
+        npm run test:unit
+    
+    - name: Run Integration Tests
+      run: |
+        npm run test:integration
+    
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.os }}-node${{ matrix.node-version }}
+        path: test-results/
+        retention-days: 30
+
+  e2e-tests:
+    needs: test-matrix
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      run: |
+        npm ci
+        cd apps/backend && npm ci
+        cd ../frontend && npm ci
+        cd ../../tests/e2e && npm ci
+    
+    - name: Install Playwright Browsers
+      run: |
+        cd tests/e2e
+        npx playwright install --with-deps
+    
+    - name: Setup Database
+      run: |
+        cd apps/backend
+        npx prisma generate
+        npx prisma db push
+    
+    - name: Start Backend
+      run: |
+        cd apps/backend
+        npm run start:dev &
+        sleep 15
+    
+    - name: Start Frontend
+      run: |
+        cd apps/frontend
+        npm run build
+        npm run preview &
+        sleep 10
+    
+    - name: Run E2E Tests
+      run: |
+        cd tests/e2e
+        npm test
+    
+    - name: Upload E2E Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: e2e-test-results
+        path: tests/e2e/test-results/
+        retention-days: 30
+
+  coverage-report:
+    needs: [test-matrix, e2e-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      run: |
+        npm ci
+        cd apps/backend && npm ci
+        cd ../frontend && npm ci
+    
+    - name: Download Test Results
+      uses: actions/download-artifact@v4
+      with:
+        name: test-results-ubuntu-latest-node18
+        path: test-results/
+    
+    - name: Generate Coverage Report
+      run: |
+        node scripts/generate-coverage-report.js
+    
+    - name: Upload Coverage Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: test-results/coverage-report.json
+        retention-days: 30
+    
+    - name: Comment Coverage on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const coveragePath = 'test-results/coverage-report.json';
+          
+          if (fs.existsSync(coveragePath)) {
+            const coverage = JSON.parse(fs.readFileSync(coveragePath, 'utf8'));
+            const summary = coverage.summary;
+            
+            const comment = `## 📊 Test Coverage Report
+            
+            | Metric | Coverage |
+            |--------|----------|
+            | Statements | ${summary.statements.percentage}% (${summary.statements.covered}/${summary.statements.total}) |
+            | Branches | ${summary.branches.percentage}% (${summary.branches.covered}/${summary.branches.total}) |
+            | Functions | ${summary.functions.percentage}% (${summary.functions.covered}/${summary.functions.total}) |
+            | Lines | ${summary.lines.percentage}% (${summary.lines.covered}/${summary.lines.total}) |
+            
+            📈 **Overall Coverage: ${summary.lines.percentage}%**`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          }
+
+  security-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      run: |
+        npm ci
+        cd apps/backend && npm ci
+        cd ../frontend && npm ci
+    
+    - name: Run Security Audit
+      run: |
+        npm audit --audit-level=moderate
+        cd apps/backend && npm audit --audit-level=moderate
+        cd ../frontend && npm audit --audit-level=moderate
+    
+    - name: Run Dependency Check
+      run: |
+        npx audit-ci --config .audit-ci.json

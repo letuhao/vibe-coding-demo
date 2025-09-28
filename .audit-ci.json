@@ -1,0 +1,14 @@
+{
+  "moderate": {
+    "skip-dev": false
+  },
+  "high": {
+    "skip-dev": false
+  },
+  "critical": {
+    "skip-dev": false
+  },
+  "allowlist": [],
+  "report-type": "summary",
+  "output-format": "text"
+}

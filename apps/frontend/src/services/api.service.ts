@@ -6,7 +6,8 @@
  * @modified 2024-01-15
  */
 
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance, AxiosResponse } from 'axios';
 import type {
   LoginRequest,
   RegisterRequest,

@@ -24,7 +24,7 @@ export const useAuth = () => {
     register,
     logout,
     clearError,
-    setLoading,
+    // setLoading,
     initialize,
   } = useAuthStore();
 
@@ -33,7 +33,7 @@ export const useAuth = () => {
    */
   useEffect(() => {
     initialize();
-  }, [initialize]);
+  }, []); // Remove initialize from dependencies to prevent infinite loop
 
   /**
    * Login user with credentials

@@ -13,7 +13,8 @@ import type {
   UpdateExpenseRequest, 
   PaginatedResponse 
 } from '../types/expense.types';
-import { expensesService, ExpenseQueryParams, ExpenseStats } from './expenses.service';
+import { expensesService } from './expenses.service';
+import type { ExpenseQueryParams, ExpenseStats } from '../types/expense.types';
 
 /**
  * Expenses store state interface

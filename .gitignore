@@ -137,3 +137,12 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+.VSCodeCounter
+package-lock.json*
+tests/e2e/test-results/
+test-results/
+
+tests/e2e/playwright-report/
+
+tests/e2e/e2e-test-results.json

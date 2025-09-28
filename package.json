@@ -7,11 +7,17 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "cd tests && npm test",
+    "test": "node scripts/run-all-tests.js",
+    "test:unit": "node scripts/run-all-tests.js",
+    "test:e2e": "node scripts/run-all-tests.js --e2e",
+    "test:backend": "cd apps/backend && npm run test:unit:cov",
+    "test:frontend": "cd apps/frontend && npm run test:run",
+    "test:integration": "cd tests && npm test",
     "test:auth": "cd tests && npm run test:auth",
     "test:categories": "cd tests && npm run test:categories",
     "test:expenses": "cd tests && npm run test:expenses",
-    "test:watch": "cd tests && npm run test:watch"
+    "test:watch": "cd tests && npm run test:watch",
+    "test:coverage": "node scripts/run-all-tests.js && node scripts/generate-coverage-report.js"
   },
   "repository": {
     "type": "git",

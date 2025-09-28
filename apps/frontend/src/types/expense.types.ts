@@ -126,3 +126,37 @@ export interface PaginatedResponse<T> {
     hasPrev: boolean;
   };
 }
+
+/**
+ * Expense query parameters
+ */
+export interface ExpenseQueryParams {
+  /** Category ID filter */
+  categoryId?: string;
+  /** Start date filter */
+  startDate?: string;
+  /** End date filter */
+  endDate?: string;
+  /** Search term */
+  search?: string;
+  /** Page number */
+  page?: number;
+  /** Items per page */
+  limit?: number;
+}
+
+/**
+ * Expense statistics
+ */
+export interface ExpenseStats {
+  /** Total number of expenses */
+  totalExpenses: number;
+  /** Total amount of all expenses */
+  totalAmount: number;
+  /** Average expense amount */
+  averageAmount: number;
+  /** Number of expenses this month */
+  thisMonthExpenses: number;
+  /** Total amount this month */
+  thisMonthAmount: number;
+}

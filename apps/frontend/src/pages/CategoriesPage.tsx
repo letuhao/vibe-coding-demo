@@ -10,7 +10,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useCategoriesStore } from '../services/categories.store';
-import type { Category, CreateCategoryRequest, CategoryType } from '../types/expense.types';
+import type { Category, CreateCategoryRequest } from '../types/expense.types';
+import { CategoryType } from '../types/expense.types';
 
 /**
  * CategoriesPage component handles category management
@@ -36,7 +37,7 @@ const CategoriesPage: React.FC = () => {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formData, setFormData] = useState<CreateCategoryRequest>({
     name: '',
-    type: 'EXPENSE',
+    type: CategoryType.EXPENSE,
   });
   const [filterType, setFilterType] = useState<CategoryType | undefined>(undefined);
 
@@ -86,7 +87,7 @@ const CategoriesPage: React.FC = () => {
         await createCategory(formData);
       }
       
-      setFormData({ name: '', type: 'EXPENSE' });
+      setFormData({ name: '', type: CategoryType.EXPENSE });
       setShowCreateForm(false);
     } catch (error) {
       // Error is handled by the store
@@ -126,7 +127,7 @@ const CategoriesPage: React.FC = () => {
   const handleCancel = () => {
     setShowCreateForm(false);
     setEditingCategory(null);
-    setFormData({ name: '', type: 'EXPENSE' });
+    setFormData({ name: '', type: CategoryType.EXPENSE });
     clearError();
   };
 
