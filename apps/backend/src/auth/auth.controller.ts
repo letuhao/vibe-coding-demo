@@ -22,7 +22,7 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Public } from '../common/decorators/public.decorator';
 import { GetUser } from '../common/decorators/get-user.decorator';
-import { User } from '../common/decorators/get-user.decorator';
+import type { User } from '../common/decorators/get-user.decorator';
 
 /**
  * AuthController handles authentication endpoints
