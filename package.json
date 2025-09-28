@@ -1,0 +1,30 @@
+{
+  "name": "vide-coding-demo",
+  "version": "1.0.0",
+  "description": "Ứng dụng quản lý chi tiêu cá nhân được xây dựng với **Vibe Coding methodology** sử dụng Cursor AI.",
+  "main": "tests/run-all-tests.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "cd tests && npm test",
+    "test:auth": "cd tests && npm run test:auth",
+    "test:categories": "cd tests && npm run test:categories",
+    "test:expenses": "cd tests && npm run test:expenses",
+    "test:watch": "cd tests && npm run test:watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/letuhao/vide-coding-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/letuhao/vide-coding-demo/issues"
+  },
+  "homepage": "https://github.com/letuhao/vide-coding-demo#readme",
+  "dependencies": {
+    "axios": "^1.12.2"
+  }
+}

@@ -6,7 +6,8 @@
  * @modified 2024-01-15
  */
 
-import { IsEmail, IsString, MinLength, Matches } from 'class-validator';
+import { IsEmail, IsString, MinLength, Matches, Validate } from 'class-validator';
+import { Match } from '../decorators/match.decorator';
 
 /**
  * DTO for user registration
@@ -37,5 +38,6 @@ export class RegisterDto {
    * Must match the password field
    */
   @IsString()
+  @Match('password', { message: 'Password confirmation does not match' })
   confirmPassword: string;
 }

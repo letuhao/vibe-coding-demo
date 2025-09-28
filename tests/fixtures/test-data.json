@@ -1,0 +1,75 @@
+{
+  "users": [
+    {
+      "email": "test@example.com",
+      "password": "Test123456",
+      "confirmPassword": "Test123456"
+    },
+    {
+      "email": "admin@example.com",
+      "password": "Admin123456",
+      "confirmPassword": "Admin123456"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Food & Dining",
+      "type": "EXPENSE"
+    },
+    {
+      "name": "Transportation",
+      "type": "EXPENSE"
+    },
+    {
+      "name": "Entertainment",
+      "type": "EXPENSE"
+    },
+    {
+      "name": "Salary",
+      "type": "INCOME"
+    },
+    {
+      "name": "Freelance",
+      "type": "INCOME"
+    }
+  ],
+  "expenses": [
+    {
+      "amount": 25.50,
+      "note": "Lunch at restaurant",
+      "date": "2024-01-15"
+    },
+    {
+      "amount": 15.00,
+      "note": "Uber ride",
+      "date": "2024-01-15"
+    },
+    {
+      "amount": 50.00,
+      "note": "Movie tickets",
+      "date": "2024-01-14"
+    },
+    {
+      "amount": 200.00,
+      "note": "Grocery shopping",
+      "date": "2024-01-13"
+    }
+  ],
+  "invalidData": {
+    "user": {
+      "email": "invalid-email",
+      "password": "123",
+      "confirmPassword": "456"
+    },
+    "category": {
+      "name": "",
+      "type": "INVALID"
+    },
+    "expense": {
+      "amount": -10,
+      "note": "",
+      "date": "invalid-date",
+      "categoryId": "invalid-id"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "vide-coding-demo-tests",
+  "version": "1.0.0",
+  "description": "Integration tests for Vibe Coding Demo",
+  "main": "run-all-tests.js",
+  "scripts": {
+    "test": "node run-all-tests.js",
+    "test:auth": "node integration/auth.test.js",
+    "test:categories": "node integration/categories.test.js",
+    "test:expenses": "node integration/expenses.test.js",
+    "test:watch": "nodemon run-all-tests.js"
+  },
+  "keywords": ["testing", "integration", "api", "expense-manager"],
+  "author": "Vibe Coding Demo",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}

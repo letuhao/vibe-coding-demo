@@ -11,6 +11,7 @@ import {
   ConflictException,
   UnauthorizedException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -26,6 +27,8 @@ import * as bcrypt from 'bcryptjs';
  */
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   /**
    * Constructor for AuthService
    * @param prismaService - Prisma service for database operations
@@ -44,46 +47,60 @@ export class AuthService {
    * @returns User information and tokens
    */
   async register(registerDto: RegisterDto) {
-    const { email, password, confirmPassword } = registerDto;
+    this.logger.log(`Starting user registration for email: ${registerDto.email}`);
+    
+    try {
+      const { email, password, confirmPassword } = registerDto;
 
-    // Validate password confirmation
-    if (password !== confirmPassword) {
-      throw new BadRequestException('Passwords do not match');
+      // Validate password confirmation
+      if (password !== confirmPassword) {
+        this.logger.warn(`Password mismatch for email: ${email}`);
+        throw new BadRequestException('Passwords do not match');
+      }
+
+      // Check if user already exists
+      this.logger.debug(`Checking if user exists for email: ${email}`);
+      const existingUser = await this.prismaService.user.findUnique({
+        where: { email },
+      });
+
+      if (existingUser) {
+        this.logger.warn(`User already exists for email: ${email}`);
+        throw new ConflictException('User with this email already exists');
+      }
+
+      // Hash password
+      this.logger.debug(`Hashing password for email: ${email}`);
+      const saltRounds = 12;
+      const passwordHash = await bcrypt.hash(password, saltRounds);
+
+      // Create user
+      this.logger.debug(`Creating user for email: ${email}`);
+      const user = await this.prismaService.user.create({
+        data: {
+          email,
+          passwordHash,
+        },
+        select: {
+          id: true,
+          email: true,
+          createdAt: true,
+        },
+      });
+
+      // Generate tokens
+      this.logger.debug(`Generating tokens for user: ${user.id}`);
+      const tokens = await this.generateTokens(user.id, user.email);
+
+      this.logger.log(`User registration successful for email: ${email}, user ID: ${user.id}`);
+      return {
+        user,
+        ...tokens,
+      };
+    } catch (error) {
+      this.logger.error(`User registration failed for email: ${registerDto.email}`, error.stack);
+      throw error;
     }
-
-    // Check if user already exists
-    const existingUser = await this.prismaService.user.findUnique({
-      where: { email },
-    });
-
-    if (existingUser) {
-      throw new ConflictException('User with this email already exists');
-    }
-
-    // Hash password
-    const saltRounds = 12;
-    const passwordHash = await bcrypt.hash(password, saltRounds);
-
-    // Create user
-    const user = await this.prismaService.user.create({
-      data: {
-        email,
-        passwordHash,
-      },
-      select: {
-        id: true,
-        email: true,
-        createdAt: true,
-      },
-    });
-
-    // Generate tokens
-    const tokens = await this.generateTokens(user.id, user.email);
-
-    return {
-      user,
-      ...tokens,
-    };
   }
 
   /**
