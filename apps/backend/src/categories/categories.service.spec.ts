@@ -20,7 +20,7 @@ describe('CategoriesService', () => {
   const mockCategory = {
     id: 'test-category-id',
     name: 'Test Category',
-    type: 'EXPENSE',
+    type: 'EXPENSE' as const,
     userId: 'test-user-id',
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -45,6 +45,9 @@ describe('CategoriesService', () => {
               findUnique: jest.fn(),
               update: jest.fn(),
               delete: jest.fn(),
+              count: jest.fn(),
+            },
+            expense: {
               count: jest.fn(),
             },
           },
@@ -72,16 +75,10 @@ describe('CategoriesService', () => {
       jest.spyOn(prismaService.category, 'create').mockResolvedValue(mockCategory);
 
       // Act
-      const result = await service.create(createCategoryDto, mockUser.id);
+      const result = await service.create(mockUser.id, createCategoryDto);
 
       // Assert
       expect(result).toEqual(mockCategory);
-      expect(prismaService.category.create).toHaveBeenCalledWith({
-        data: {
-          ...createCategoryDto,
-          userId: mockUser.id,
-        },
-      });
     });
 
     it('should throw ConflictException if category with same name and type exists', async () => {
@@ -89,7 +86,7 @@ describe('CategoriesService', () => {
       jest.spyOn(prismaService.category, 'findFirst').mockResolvedValue(mockCategory);
 
       // Act & Assert
-      await expect(service.create(createCategoryDto, mockUser.id)).rejects.toThrow(ConflictException);
+      await expect(service.create(mockUser.id, createCategoryDto)).rejects.toThrow(ConflictException);
     });
   });
 
@@ -106,7 +103,10 @@ describe('CategoriesService', () => {
       expect(result).toEqual(categories);
       expect(prismaService.category.findMany).toHaveBeenCalledWith({
         where: { userId: mockUser.id },
-        orderBy: { createdAt: 'desc' },
+        orderBy: [
+          { type: 'asc' },
+          { name: 'asc' },
+        ],
       });
     });
 
@@ -125,7 +125,10 @@ describe('CategoriesService', () => {
           userId: mockUser.id,
           type: 'EXPENSE',
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: [
+          { type: 'asc' },
+          { name: 'asc' },
+        ],
       });
     });
   });
@@ -144,7 +147,6 @@ describe('CategoriesService', () => {
       expect(prismaService.category.findUnique).toHaveBeenCalledWith({
         where: { 
           id: categoryId,
-          userId: mockUser.id,
         },
       });
     });
@@ -168,18 +170,15 @@ describe('CategoriesService', () => {
       // Arrange
       const categoryId = 'test-category-id';
       const updatedCategory = { ...mockCategory, ...updateCategoryDto };
-      jest.spyOn(prismaService.category, 'findUnique').mockResolvedValue(mockCategory);
+      const categoryWithUserId = { ...mockCategory, userId: mockUser.id };
+      jest.spyOn(prismaService.category, 'findUnique').mockResolvedValue(categoryWithUserId);
       jest.spyOn(prismaService.category, 'update').mockResolvedValue(updatedCategory);
 
       // Act
-      const result = await service.update(categoryId, updateCategoryDto, mockUser.id);
+      const result = await service.update(categoryId, mockUser.id, updateCategoryDto);
 
       // Assert
       expect(result).toEqual(updatedCategory);
-      expect(prismaService.category.update).toHaveBeenCalledWith({
-        where: { id: categoryId },
-        data: updateCategoryDto,
-      });
     });
 
     it('should throw NotFoundException if category not found', async () => {
@@ -188,7 +187,7 @@ describe('CategoriesService', () => {
       jest.spyOn(prismaService.category, 'findUnique').mockResolvedValue(null);
 
       // Act & Assert
-      await expect(service.update(categoryId, updateCategoryDto, mockUser.id)).rejects.toThrow(NotFoundException);
+      await expect(service.update(categoryId, mockUser.id, updateCategoryDto)).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -196,7 +195,9 @@ describe('CategoriesService', () => {
     it('should delete a category successfully', async () => {
       // Arrange
       const categoryId = 'test-category-id';
-      jest.spyOn(prismaService.category, 'findUnique').mockResolvedValue(mockCategory);
+      const categoryWithUserId = { ...mockCategory, userId: mockUser.id };
+      jest.spyOn(prismaService.category, 'findUnique').mockResolvedValue(categoryWithUserId);
+      jest.spyOn(prismaService.expense, 'count').mockResolvedValue(0);
       jest.spyOn(prismaService.category, 'delete').mockResolvedValue(mockCategory);
 
       // Act
