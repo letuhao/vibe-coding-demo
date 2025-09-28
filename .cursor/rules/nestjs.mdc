@@ -1,0 +1,37 @@
+---
+description: Sử dụng NestJS best practices - dependency injection, decorators, proper error handling, và module organization
+alwaysApply: true
+---
+
+## NestJS Rules
+
+### Module Organization
+- Mỗi feature phải có module riêng (auth, users, categories, expenses, reports)
+- Sử dụng imports, controllers, providers, exports đúng cách
+- Không đặt tất cả trong AppModule
+
+### Service Layer
+- Sử dụng @Injectable() decorator
+- Constructor injection với private readonly
+- Proper error handling với try-catch
+- Logging với Logger service
+- Return types rõ ràng
+
+### Controller Layer
+- Sử dụng @Controller() với route prefix
+- @UseGuards() cho authentication
+- Proper HTTP status codes
+- Validation với DTOs
+- Error handling
+
+### DTOs
+- Sử dụng class-validator decorators
+- Validation pipes
+- Transform data khi cần
+- Separate DTOs cho create/update
+
+### Error Handling
+- Sử dụng NestJS built-in exceptions
+- Custom exception filters
+- Proper HTTP status codes
+- Logging errors

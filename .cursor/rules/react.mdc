@@ -1,0 +1,36 @@
+---
+description: Sử dụng React best practices - TypeScript, functional components, hooks, proper state management
+alwaysApply: true
+---
+
+## React Rules
+
+### Component Structure
+- Sử dụng functional components với TypeScript
+- Props interface rõ ràng
+- Default props khi cần
+- Memoization với React.memo khi cần
+
+### Hooks
+- Sử dụng custom hooks cho business logic
+- Proper dependency arrays
+- Cleanup effects
+- Error handling trong hooks
+
+### State Management
+- useState cho local state
+- useReducer cho complex state
+- Zustand cho global state
+- Proper state updates
+
+### Event Handling
+- Proper event types
+- useCallback cho performance
+- Prevent default behavior
+- Error boundaries
+
+### Styling
+- Tailwind CSS classes
+- Responsive design
+- Consistent spacing
+- Dark mode support

@@ -1,0 +1,32 @@
+---
+description: Sử dụng Prisma ORM best practices - proper schema design, queries, và error handling
+alwaysApply: true
+---
+
+## Prisma Rules
+
+### Schema Design
+- Sử dụng snake_case cho database columns
+- Proper relationships với foreign keys
+- Cascade delete khi cần
+- Indexes cho performance
+- Constraints và validations
+
+### Queries
+- Sử dụng include cho relationships
+- Proper where clauses
+- Pagination với skip/take
+- OrderBy cho sorting
+- Error handling
+
+### Service Layer
+- Wrap Prisma calls trong try-catch
+- Proper error messages
+- Logging
+- Return types rõ ràng
+
+### Migrations
+- Descriptive migration names
+- Test migrations trước khi apply
+- Rollback strategy
+- Seed data
