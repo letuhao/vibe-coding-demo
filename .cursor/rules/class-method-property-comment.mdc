@@ -1,0 +1,4 @@
+---
+description: Mọi class/method/property/parameter đều phải có comment để giải thích ý nghĩa của chúng
+alwaysApply: true
+---

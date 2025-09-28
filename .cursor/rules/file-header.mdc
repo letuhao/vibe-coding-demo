@@ -1,0 +1,4 @@
+---
+description: bắt đầu của file phải có header comment để mô tả ngày tạo, người tạo, version, ngày modify, nội dung modify
+alwaysApply: true
+---
