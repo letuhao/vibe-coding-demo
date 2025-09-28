@@ -188,6 +188,12 @@ export class AuthService {
    * @returns Object containing access and refresh tokens
    */
   private async generateTokens(userId: string, email: string) {
+    this.logger.debug('Generating tokens with config:');
+    this.logger.debug(`JWT_SECRET: ${this.configService.get<string>('JWT_SECRET') ? 'SET' : 'NOT SET'}`);
+    this.logger.debug(`JWT_EXPIRES_IN: ${this.configService.get<string>('JWT_EXPIRES_IN')}`);
+    this.logger.debug(`JWT_REFRESH_SECRET: ${this.configService.get<string>('JWT_REFRESH_SECRET') ? 'SET' : 'NOT SET'}`);
+    this.logger.debug(`JWT_REFRESH_EXPIRES_IN: ${this.configService.get<string>('JWT_REFRESH_EXPIRES_IN')}`);
+    
     const payload = { sub: userId, email };
 
     const [accessToken, refreshToken] = await Promise.all([
