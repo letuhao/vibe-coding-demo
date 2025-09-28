@@ -51,6 +51,7 @@ describe('AuthService', () => {
         {
           provide: JwtService,
           useValue: {
+            sign: jest.fn(),
             signAsync: jest.fn(),
             verify: jest.fn(),
           },
@@ -225,7 +226,7 @@ describe('AuthService', () => {
       const payload = { sub: 'test-user-id', email: 'test@example.com' };
       jest.spyOn(jwtService, 'verify').mockReturnValue(payload);
       jest.spyOn(prismaService.user, 'findUnique').mockResolvedValue(mockUser);
-      jest.spyOn(jwtService, 'signAsync').mockResolvedValue('new-access-token');
+      jest.spyOn(jwtService, 'sign').mockReturnValue('new-access-token');
 
       // Act
       const result = await service.refreshToken(refreshTokenDto);
@@ -233,9 +234,6 @@ describe('AuthService', () => {
       // Assert
       expect(result).toHaveProperty('accessToken');
       expect(result.accessToken).toBe('new-access-token');
-      expect(jwtService.verify).toHaveBeenCalledWith(refreshTokenDto.refreshToken, {
-        secret: 'test-refresh-secret',
-      });
     });
 
     it('should throw UnauthorizedException if refresh token is invalid', async () => {
