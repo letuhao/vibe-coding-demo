@@ -1,0 +1,34 @@
+{
+  "name": "vibe-coding-workshop",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "workshop",
+    "presentation",
+    "vibe-coding",
+    "cursor-ai"
+  ],
+  "author": "Vibe Coding Demo Team",
+  "license": "MIT",
+  "description": "Interactive presentation for Vibe Coding with Cursor AI workshop",
+  "dependencies": {
+    "@types/react": "^19.1.15",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.21",
+    "framer-motion": "^12.23.22",
+    "lucide-react": "^0.544.0",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.6"
+  }
+}

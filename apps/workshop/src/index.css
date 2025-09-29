@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-900 text-white;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+  }
+}
+
+@layer components {
+  .slide-container {
+    @apply min-h-screen flex items-center justify-center p-8;
+  }
+  
+  .slide-content {
+    @apply max-w-6xl mx-auto w-full;
+  }
+  
+  .slide-title {
+    @apply text-5xl md:text-6xl font-display font-bold mb-8 text-center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .slide-subtitle {
+    @apply text-2xl md:text-3xl font-display font-semibold mb-6 text-center text-gray-300;
+  }
+  
+  .slide-text {
+    @apply text-lg md:text-xl leading-relaxed text-gray-200 mb-6;
+  }
+  
+  .slide-list {
+    @apply space-y-4 text-lg md:text-xl text-gray-200;
+  }
+  
+  .slide-list li {
+    @apply flex items-start space-x-3;
+  }
+  
+  .slide-list li::before {
+    @apply text-primary-400 font-bold mr-2 mt-1;
+    content: "▶";
+  }
+  
+  .code-block {
+    @apply bg-gray-800 rounded-lg p-6 text-sm font-mono text-gray-200 overflow-x-auto;
+    border: 1px solid #374151;
+  }
+  
+  .highlight-box {
+    @apply bg-gradient-to-r from-primary-500/20 to-accent-500/20 border border-primary-500/30 rounded-lg p-6 mb-6;
+  }
+  
+  .tech-badge {
+    @apply inline-block bg-gradient-to-r from-primary-500 to-accent-500 text-white px-4 py-2 rounded-full text-sm font-medium mr-2 mb-2;
+  }
+  
+  .navigation-button {
+    @apply fixed bottom-8 right-8 bg-gradient-to-r from-primary-500 to-accent-500 text-white px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .slide-counter {
+    @apply fixed bottom-8 left-8 bg-gray-800/80 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium;
+  }
+  
+  .progress-bar {
+    @apply fixed top-0 left-0 h-1 bg-gradient-to-r from-primary-500 to-accent-500 transition-all duration-300;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .bg-gradient-accent {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+}
