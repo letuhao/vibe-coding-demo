@@ -1,0 +1,172 @@
+{
+    "designTokens": {
+        "colors": {
+            "primary": {
+                "50": "#[HEX_VALUE]",
+                "100": "#[HEX_VALUE]",
+                "200": "#[HEX_VALUE]",
+                "300": "#[HEX_VALUE]",
+                "400": "#[HEX_VALUE]",
+                "500": "#[HEX_VALUE]",
+                "600": "#[HEX_VALUE]",
+                "700": "#[HEX_VALUE]",
+                "800": "#[HEX_VALUE]",
+                "900": "#[HEX_VALUE]"
+            },
+            "secondary": {
+                "50": "#[HEX_VALUE]",
+                "100": "#[HEX_VALUE]",
+                "200": "#[HEX_VALUE]",
+                "300": "#[HEX_VALUE]",
+                "400": "#[HEX_VALUE]",
+                "500": "#[HEX_VALUE]",
+                "600": "#[HEX_VALUE]",
+                "700": "#[HEX_VALUE]",
+                "800": "#[HEX_VALUE]",
+                "900": "#[HEX_VALUE]"
+            },
+            "success": {
+                "50": "#[HEX_VALUE]",
+                "500": "#[HEX_VALUE]",
+                "600": "#[HEX_VALUE]"
+            },
+            "error": {
+                "50": "#[HEX_VALUE]",
+                "500": "#[HEX_VALUE]",
+                "600": "#[HEX_VALUE]"
+            },
+            "warning": {
+                "50": "#[HEX_VALUE]",
+                "500": "#[HEX_VALUE]",
+                "600": "#[HEX_VALUE]"
+            },
+            "info": {
+                "50": "#[HEX_VALUE]",
+                "500": "#[HEX_VALUE]",
+                "600": "#[HEX_VALUE]"
+            },
+            "gray": {
+                "50": "#[HEX_VALUE]",
+                "100": "#[HEX_VALUE]",
+                "200": "#[HEX_VALUE]",
+                "300": "#[HEX_VALUE]",
+                "400": "#[HEX_VALUE]",
+                "500": "#[HEX_VALUE]",
+                "600": "#[HEX_VALUE]",
+                "700": "#[HEX_VALUE]",
+                "800": "#[HEX_VALUE]",
+                "900": "#[HEX_VALUE]"
+            }
+        },
+        "typography": {
+            "fontFamily": {
+                "sans": [
+                    "[FONT_NAME]",
+                    "system-ui",
+                    "sans-serif"
+                ],
+                "mono": [
+                    "[MONO_FONT]",
+                    "monospace"
+                ]
+            },
+            "fontSize": {
+                "xs": "[SIZE]rem",
+                "sm": "[SIZE]rem",
+                "base": "[SIZE]rem",
+                "lg": "[SIZE]rem",
+                "xl": "[SIZE]rem",
+                "2xl": "[SIZE]rem",
+                "3xl": "[SIZE]rem"
+            },
+            "fontWeight": {
+                "normal": "[WEIGHT]",
+                "medium": "[WEIGHT]",
+                "semibold": "[WEIGHT]",
+                "bold": "[WEIGHT]",
+                "extrabold": "[WEIGHT]"
+            },
+            "lineHeight": {
+                "tight": "[HEIGHT]",
+                "normal": "[HEIGHT]",
+                "relaxed": "[HEIGHT]"
+            }
+        },
+        "spacing": {
+            "scale": {
+                "0": "0px",
+                "1": "[SIZE]rem",
+                "2": "[SIZE]rem",
+                "3": "[SIZE]rem",
+                "4": "[SIZE]rem",
+                "5": "[SIZE]rem",
+                "6": "[SIZE]rem",
+                "8": "[SIZE]rem",
+                "10": "[SIZE]rem",
+                "12": "[SIZE]rem",
+                "16": "[SIZE]rem",
+                "20": "[SIZE]rem",
+                "24": "[SIZE]rem"
+            },
+            "container": {
+                "maxWidth": {
+                    "sm": "[WIDTH]px",
+                    "md": "[WIDTH]px",
+                    "lg": "[WIDTH]px",
+                    "xl": "[WIDTH]px"
+                },
+                "padding": {
+                    "mobile": "[SIZE]rem",
+                    "tablet": "[SIZE]rem",
+                    "desktop": "[SIZE]rem"
+                }
+            }
+        },
+        "components": {
+            "button": {
+                "padding": "py-[Y] px-[X]",
+                "borderRadius": "[RADIUS]px",
+                "fontSize": "[SIZE]rem",
+                "fontWeight": "[WEIGHT]"
+            },
+            "input": {
+                "padding": "px-[X] py-[Y]",
+                "borderRadius": "[RADIUS]px",
+                "fontSize": "[SIZE]rem",
+                "borderWidth": "[WIDTH]px"
+            },
+            "card": {
+                "padding": "p-[SIZE]",
+                "borderRadius": "[RADIUS]px",
+                "shadow": "[SHADOW_VALUE]"
+            }
+        },
+        "semantic": {
+            "[SCREEN_NAME]": {
+                "background": "#[HEX_VALUE]",
+                "container": "#[HEX_VALUE]",
+                "primary_button": "#[HEX_VALUE]",
+                "primary_button_hover": "#[HEX_VALUE]",
+                "text_primary": "#[HEX_VALUE]",
+                "text_secondary": "#[HEX_VALUE]",
+                "error_text": "#[HEX_VALUE]",
+                "error_background": "#[HEX_VALUE]"
+            }
+        },
+        "usage": {
+            "primary": "[USAGE_DESCRIPTION]",
+            "secondary": "[USAGE_DESCRIPTION]",
+            "success": "[USAGE_DESCRIPTION]",
+            "error": "[USAGE_DESCRIPTION]",
+            "warning": "[USAGE_DESCRIPTION]",
+            "info": "[USAGE_DESCRIPTION]",
+            "gray": "[USAGE_DESCRIPTION]"
+        }
+    },
+    "instructions": {
+        "how_to_use": "Replace all [PLACEHOLDER] values with your actual design values",
+        "figma_integration": "Use Figma plugins like 'Design Tokens' or 'Token Studio' to export these values",
+        "validation": "Ensure all color values meet WCAG AA contrast requirements (4.5:1)",
+        "maintenance": "Keep this file updated when design system changes"
+    }
+}

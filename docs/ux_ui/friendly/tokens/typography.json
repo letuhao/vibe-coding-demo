@@ -1,0 +1,260 @@
+{
+    "typography": {
+        "fontFamily": {
+            "sans": [
+                "Inter",
+                "system-ui",
+                "sans-serif"
+            ],
+            "mono": [
+                "Fira Code",
+                "monospace"
+            ]
+        },
+        "fontSize": {
+            "xs": "0.75rem",
+            "sm": "0.875rem",
+            "base": "1rem",
+            "lg": "1.125rem",
+            "xl": "1.25rem",
+            "2xl": "1.5rem",
+            "3xl": "1.875rem",
+            "4xl": "2.25rem",
+            "5xl": "3rem",
+            "6xl": "3.75rem"
+        },
+        "fontWeight": {
+            "thin": "100",
+            "extralight": "200",
+            "light": "300",
+            "normal": "400",
+            "medium": "500",
+            "semibold": "600",
+            "bold": "700",
+            "extrabold": "800",
+            "black": "900"
+        },
+        "lineHeight": {
+            "none": "1",
+            "tight": "1.25",
+            "snug": "1.375",
+            "normal": "1.5",
+            "relaxed": "1.625",
+            "loose": "2"
+        },
+        "letterSpacing": {
+            "tighter": "-0.05em",
+            "tight": "-0.025em",
+            "normal": "0em",
+            "wide": "0.025em",
+            "wider": "0.05em",
+            "widest": "0.1em"
+        },
+        "headings": {
+            "h1": {
+                "fontSize": "3xl",
+                "fontWeight": "extrabold",
+                "lineHeight": "tight",
+                "color": "text.primary"
+            },
+            "h2": {
+                "fontSize": "2xl",
+                "fontWeight": "bold",
+                "lineHeight": "tight",
+                "color": "text.primary"
+            },
+            "h3": {
+                "fontSize": "lg",
+                "fontWeight": "medium",
+                "lineHeight": "snug",
+                "color": "text.primary"
+            },
+            "h4": {
+                "fontSize": "base",
+                "fontWeight": "medium",
+                "lineHeight": "normal",
+                "color": "text.primary"
+            }
+        },
+        "body": {
+            "large": {
+                "fontSize": "lg",
+                "fontWeight": "normal",
+                "lineHeight": "relaxed",
+                "color": "text.secondary"
+            },
+            "medium": {
+                "fontSize": "base",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.secondary"
+            },
+            "small": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.tertiary"
+            }
+        },
+        "labels": {
+            "form": {
+                "fontSize": "sm",
+                "fontWeight": "medium",
+                "lineHeight": "normal",
+                "color": "text.primary"
+            },
+            "button": {
+                "fontSize": "sm",
+                "fontWeight": "medium",
+                "lineHeight": "none",
+                "color": "text.inverse"
+            },
+            "caption": {
+                "fontSize": "xs",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.tertiary"
+            }
+        },
+        "navigation": {
+            "title": {
+                "fontSize": "xl",
+                "fontWeight": "semibold",
+                "lineHeight": "tight",
+                "color": "text.primary"
+            },
+            "link": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "primary.600"
+            },
+            "user": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.secondary"
+            }
+        },
+        "cards": {
+            "title": {
+                "fontSize": "sm",
+                "fontWeight": "medium",
+                "lineHeight": "normal",
+                "color": "text.tertiary"
+            },
+            "value": {
+                "fontSize": "lg",
+                "fontWeight": "medium",
+                "lineHeight": "tight",
+                "color": "text.primary"
+            },
+            "subtext": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.tertiary"
+            }
+        },
+        "forms": {
+            "input": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.primary"
+            },
+            "placeholder": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.tertiary"
+            },
+            "error": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "error.600"
+            }
+        },
+        "tables": {
+            "header": {
+                "fontSize": "xs",
+                "fontWeight": "medium",
+                "lineHeight": "normal",
+                "color": "text.tertiary",
+                "textTransform": "uppercase",
+                "letterSpacing": "wide"
+            },
+            "cell": {
+                "fontSize": "sm",
+                "fontWeight": "medium",
+                "lineHeight": "normal",
+                "color": "text.primary"
+            },
+            "data": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.secondary"
+            }
+        },
+        "charts": {
+            "title": {
+                "fontSize": "lg",
+                "fontWeight": "medium",
+                "lineHeight": "tight",
+                "color": "text.primary"
+            },
+            "label": {
+                "fontSize": "sm",
+                "fontWeight": "normal",
+                "lineHeight": "normal",
+                "color": "text.secondary"
+            },
+            "value": {
+                "fontSize": "sm",
+                "fontWeight": "medium",
+                "lineHeight": "normal",
+                "color": "text.primary"
+            }
+        },
+        "semantic": {
+            "login": {
+                "heading": "3xl extrabold text-gray-900",
+                "subtext": "sm text-gray-600",
+                "link": "sm font-medium text-indigo-600 hover:text-indigo-500",
+                "button": "sm font-medium text-white",
+                "error": "sm text-red-600"
+            },
+            "dashboard": {
+                "title": "xl font-semibold text-gray-900",
+                "welcome": "2xl font-bold text-gray-900",
+                "description": "text-gray-600",
+                "user": "sm text-gray-700",
+                "card_title": "sm font-medium text-gray-500",
+                "card_value": "lg font-medium",
+                "card_subtext": "sm text-gray-500"
+            },
+            "expenses": {
+                "title": "xl font-semibold text-gray-900",
+                "amount": "lg font-medium text-gray-900",
+                "category": "sm text-gray-500",
+                "date": "sm text-gray-500",
+                "note": "sm text-gray-600"
+            },
+            "categories": {
+                "title": "xl font-semibold text-gray-900",
+                "name": "sm font-medium text-gray-900",
+                "type": "xs",
+                "type_expense": "xs text-red-600",
+                "type_income": "xs text-green-600"
+            },
+            "reports": {
+                "title": "xl font-semibold text-gray-900",
+                "chart_title": "lg font-medium text-gray-900",
+                "period_active": "sm font-medium text-white",
+                "period_inactive": "sm font-medium text-gray-700"
+            }
+        }
+    }
+}
